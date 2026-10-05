@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>community like · Friends</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Instrument+Serif:ital@0;1&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Shadows+Into+Light&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <svg class="svg-library" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <symbol id="heart" viewBox="0 0 24 24">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>
+        </symbol>
+        <symbol id="comment" viewBox="0 0 24 24">
+          <path d="M21 11.5a9 9 0 0 1-9 9 10 10 0 0 1-4-.9L3 21l1.4-4.8A9 9 0 1 1 21 11.5Z"/>
+        </symbol>
+        <symbol id="share" viewBox="0 0 24 24">
+          <path d="M12 16V3m-5 5 5-5 5 5M5 13v7h14v-7"/>
+        </symbol>
+        <symbol id="bookmark" viewBox="0 0 24 24">
+          <path d="M6 3h12v18l-6-4-6 4Z"/>
+        </symbol>
+        <symbol id="pin" viewBox="0 0 24 24">
+          <path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/>
+          <circle cx="12" cy="10" r="2.5"/>
+        </symbol>
+        <symbol id="search" viewBox="0 0 24 24">
+          <circle cx="10.5" cy="10.5" r="7"/>
+          <path d="m16 16 5 5"/>
+        </symbol>
+      </defs>
+    </svg>
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Community navigation">
+        <a class="brand" href="index.html" aria-label="community like home">
+          <img src="assets/logo.png" alt="community like" class="brand-logo">
+        </a>
+        <nav class="navigation">
+          <a class="nav-link" href="profile.html">
+            <span class="nav-icon">
+              <img src="assets/profile.png" alt="">
+            </span>
+            <span class="nav-label">Profile</span>
+          </a>
+          <a class="nav-link" href="index.html">
+            <span class="nav-icon">
+              <img src="assets/feeds.png" alt="">
+            </span>
+            <span class="nav-label">Feeds</span>
+          </a>
+          <a class="nav-link" href="event.html">
+            <span class="nav-icon">
+              <img src="assets/event.png" alt="">
+            </span>
+            <span class="nav-label">Event</span>
+            <span class="count-badge">3</span>
+          </a>
+          <a class="nav-link active" href="friends.html" aria-current="page">
+            <span class="nav-icon">
+              <img src="assets/friends.png" alt="">
+            </span>
+            <span class="nav-label">Friends</span>
+          </a>
+        </nav>
+      </aside>
+      <main class="main-content">
+        <form class="search-bar" role="search">
+          <label class="sr-only" for="site-search">Search</label>
+          <svg class="search-icon" aria-hidden="true">
+            <use href="#search"/>
+          </svg>
+          <input id="site-search" type="search" placeholder="Search" autocomplete="off">
+        </form>
+
+        <section class="directory-page" aria-labelledby="friends-heading">
+          <header class="page-heading">
+            <div>
+              <h1 id="friends-heading">Friends</h1>
+              <p>The familiar faces in your community.</p>
+            </div>
+            <span class="section-count">4 friends</span>
+          </header>
+          <div class="friend-list">
+            <article class="friend-card" data-search-item>
+              <img class="friend-picture" src="assets/dummy-profile-01.png" alt="Maya Chen's profile picture">
+              <div class="friend-info">
+                <h2>Maya Chen</h2>
+                <p>@mayachen</p>
+                <span class="friend-status">Friend</span>
+              </div>
+              <button class="quiet-button friend-profile-button" type="button" aria-expanded="false" aria-controls="friend-bio-0">View profile</button>
+              <p class="friend-bio" id="friend-bio-0" hidden>Finding quiet moments in busy days. Photography, parks, and a good cup of coffee.</p>
+            </article>
+            <article class="friend-card" data-search-item>
+              <img class="friend-picture" src="assets/dummy-profile-02.png" alt="Sam Rivera's profile picture">
+              <div class="friend-info">
+                <h2>Sam Rivera</h2>
+                <p>@samrivera</p>
+                <span class="friend-status">Friend</span>
+              </div>
+              <button class="quiet-button friend-profile-button" type="button" aria-expanded="false" aria-controls="friend-bio-1">View profile</button>
+              <p class="friend-bio" id="friend-bio-1" hidden>Always taking the scenic route. Sharing snapshots from everyday walks.</p>
+            </article>
+            <article class="friend-card" data-search-item>
+              <img class="friend-picture" src="assets/dummy-profile-03.png" alt="Jordan Lee's profile picture">
+              <div class="friend-info">
+                <h2>Jordan Lee</h2>
+                <p>@jordanlee</p>
+                <span class="friend-status">Friend</span>
+              </div>
+              <button class="quiet-button friend-profile-button" type="button" aria-expanded="false" aria-controls="friend-bio-2">View profile</button>
+              <p class="friend-bio" id="friend-bio-2" hidden>Creative experiments and a different perspective on familiar places.</p>
+            </article>
+            <article class="friend-card" data-search-item>
+              <img class="friend-picture" src="assets/dummy-profile-04.png" alt="Noah Williams's profile picture">
+              <div class="friend-info">
+                <h2>Noah Williams</h2>
+                <p>@noahwilliams</p>
+                <span class="friend-status">Friend</span>
+              </div>
+              <button class="quiet-button friend-profile-button" type="button" aria-expanded="false" aria-controls="friend-bio-3">View profile</button>
+              <p class="friend-bio" id="friend-bio-3" hidden>Weekend wanderer. Fresh air, open roads, and little discoveries.</p>
+            </article>
+          </div>
+          <p class="directory-empty" hidden>No friends match your search.</p>
+        </section>
+        <footer class="site-footer">
+          <span>community like</span>
+          <span class="footer-dot" aria-hidden="true">·</span>
+          <span>Little moments, shared.</span>
+        </footer>
+      </main>
+    </div>
+    <script src="app.js">
+    </script>
+  </body>
+</html>

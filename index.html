@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>community like · Feeds</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Instrument+Serif:ital@0;1&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Shadows+Into+Light&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <svg class="svg-library" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <symbol id="heart" viewBox="0 0 24 24">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>
+        </symbol>
+        <symbol id="comment" viewBox="0 0 24 24">
+          <path d="M21 11.5a9 9 0 0 1-9 9 10 10 0 0 1-4-.9L3 21l1.4-4.8A9 9 0 1 1 21 11.5Z"/>
+        </symbol>
+        <symbol id="share" viewBox="0 0 24 24">
+          <path d="M12 16V3m-5 5 5-5 5 5M5 13v7h14v-7"/>
+        </symbol>
+        <symbol id="bookmark" viewBox="0 0 24 24">
+          <path d="M6 3h12v18l-6-4-6 4Z"/>
+        </symbol>
+        <symbol id="pin" viewBox="0 0 24 24">
+          <path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/>
+          <circle cx="12" cy="10" r="2.5"/>
+        </symbol>
+        <symbol id="search" viewBox="0 0 24 24">
+          <circle cx="10.5" cy="10.5" r="7"/>
+          <path d="m16 16 5 5"/>
+        </symbol>
+      </defs>
+    </svg>
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Community navigation">
+        <a class="brand" href="index.html" aria-label="community like home">
+          <img src="assets/logo.png" alt="community like" class="brand-logo">
+        </a>
+        <nav class="navigation">
+          <a class="nav-link" href="profile.html">
+            <span class="nav-icon">
+              <img src="assets/profile.png" alt="">
+            </span>
+            <span class="nav-label">Profile</span>
+          </a>
+          <a class="nav-link active" href="index.html" aria-current="page">
+            <span class="nav-icon">
+              <img src="assets/feeds.png" alt="">
+            </span>
+            <span class="nav-label">Feeds</span>
+          </a>
+          <a class="nav-link" href="event.html">
+            <span class="nav-icon">
+              <img src="assets/event.png" alt="">
+            </span>
+            <span class="nav-label">Event</span>
+            <span class="count-badge">3</span>
+          </a>
+          <a class="nav-link" href="friends.html">
+            <span class="nav-icon">
+              <img src="assets/friends.png" alt="">
+            </span>
+            <span class="nav-label">Friends</span>
+          </a>
+        </nav>
+      </aside>
+      <main class="main-content">
+        <form class="search-bar" role="search">
+          <label class="sr-only" for="site-search">Search</label>
+          <svg class="search-icon" aria-hidden="true">
+            <use href="#search"/>
+          </svg>
+          <input id="site-search" type="search" placeholder="Search" autocomplete="off">
+        </form>
+        <section class="feed" aria-label="Posts">
+          <div class="post-list">
+            <article class="post-card">
+              <figure class="post-media">
+                <img src="assets/dummy-post-01.png" alt="A leafy tree canopy against a clear blue sky">
+              </figure>
+              <div class="post-details">
+                <header class="post-header">
+                  <img class="post-avatar" src="assets/dummy-profile-01.png" alt="Maya Chen's profile picture">
+                  <div class="post-author">
+                    <strong>Maya Chen</strong>
+                    <span>@mayachen · 24 min</span>
+                  </div>
+                  <button class="more-button" type="button" aria-label="More options for Maya Chen's post">•••</button>
+                </header>
+                <h2 class="post-title">A quieter kind of morning</h2>
+                <p class="post-location">
+                  <svg aria-hidden="true">
+                    <use href="#pin"/>
+                  </svg>
+                  Riverside Park, NYC
+                </p>
+                <p class="post-copy">There is something about looking up that makes a busy day feel a little quieter.</p>
+                <footer class="post-footer">
+                  <button class="post-action like-button" type="button" aria-label="Like post" aria-pressed="false">
+                    <svg aria-hidden="true">
+                      <use href="#heart"/>
+                    </svg>
+                    <span class="like-count">48</span>
+                  </button>
+                  <button class="post-action " type="button" aria-label="12 comments">
+                    <svg aria-hidden="true">
+                      <use href="#comment"/>
+                    </svg>
+                    <span>12</span>
+                  </button>
+                  <button class="post-action " type="button" aria-label="Share post">
+                    <svg aria-hidden="true">
+                      <use href="#share"/>
+                    </svg>
+                    <span>Share</span>
+                  </button>
+                  <button class="post-action save-action" type="button" aria-label="Save post" aria-pressed="false">
+                    <svg aria-hidden="true">
+                      <use href="#bookmark"/>
+                    </svg>
+                  </button>
+                </footer>
+              </div>
+            </article>
+            <article class="post-card">
+              <figure class="post-media">
+                <img src="assets/dummy-post-02.png" alt="An abstract photograph of trees and sky blurred by motion" loading="lazy">
+              </figure>
+              <div class="post-details">
+                <header class="post-header">
+                  <img class="post-avatar" src="assets/dummy-profile-02.png" alt="Sam Rivera's profile picture">
+                  <div class="post-author">
+                    <strong>Sam Rivera</strong>
+                    <span>@samrivera · 1 hr</span>
+                  </div>
+                  <button class="more-button" type="button" aria-label="More options for Sam Rivera's post">•••</button>
+                </header>
+                <h2 class="post-title">The world in motion</h2>
+                <p class="post-location">
+                  <svg aria-hidden="true">
+                    <use href="#pin"/>
+                  </svg>
+                  Outdoors
+                </p>
+                <p class="post-copy">A little blur from the afternoon walk.</p>
+                <footer class="post-footer">
+                  <button class="post-action like-button" type="button" aria-label="Like post" aria-pressed="false">
+                    <svg aria-hidden="true">
+                      <use href="#heart"/>
+                    </svg>
+                    <span class="like-count">32</span>
+                  </button>
+                  <button class="post-action " type="button" aria-label="6 comments">
+                    <svg aria-hidden="true">
+                      <use href="#comment"/>
+                    </svg>
+                    <span>6</span>
+                  </button>
+                  <button class="post-action " type="button" aria-label="Share post">
+                    <svg aria-hidden="true">
+                      <use href="#share"/>
+                    </svg>
+                    <span>Share</span>
+                  </button>
+                  <button class="post-action save-action" type="button" aria-label="Save post" aria-pressed="false">
+                    <svg aria-hidden="true">
+                      <use href="#bookmark"/>
+                    </svg>
+                  </button>
+                </footer>
+              </div>
+            </article>
+            <article class="post-card">
+              <figure class="post-media">
+                <img src="assets/dummy-post-03.png" alt="Soft layers of foliage in a blurred woodland photograph" loading="lazy">
+              </figure>
+              <div class="post-details">
+                <header class="post-header">
+                  <img class="post-avatar" src="assets/dummy-profile-03.png" alt="Jordan Lee's profile picture">
+                  <div class="post-author">
+                    <strong>Jordan Lee</strong>
+                    <span>@jordanlee · 2 hr</span>
+                  </div>
+                  <button class="more-button" type="button" aria-label="More options for Jordan Lee's post">•••</button>
+                </header>
+                <h2 class="post-title">Between the trees</h2>
+                <p class="post-location">
+                  <svg aria-hidden="true">
+                    <use href="#pin"/>
+                  </svg>
+                  Outdoors
+                </p>
+                <p class="post-copy">Finding a different perspective in familiar places.</p>
+                <footer class="post-footer">
+                  <button class="post-action like-button" type="button" aria-label="Like post" aria-pressed="false">
+                    <svg aria-hidden="true">
+                      <use href="#heart"/>
+                    </svg>
+                    <span class="like-count">26</span>
+                  </button>
+                  <button class="post-action " type="button" aria-label="4 comments">
+                    <svg aria-hidden="true">
+                      <use href="#comment"/>
+                    </svg>
+                    <span>4</span>
+                  </button>
+                  <button class="post-action " type="button" aria-label="Share post">
+                    <svg aria-hidden="true">
+                      <use href="#share"/>
+                    </svg>
+                    <span>Share</span>
+                  </button>
+                  <button class="post-action save-action" type="button" aria-label="Save post" aria-pressed="false">
+                    <svg aria-hidden="true">
+                      <use href="#bookmark"/>
+                    </svg>
+                  </button>
+                </footer>
+              </div>
+            </article>
+            <article class="post-card">
+              <figure class="post-media">
+                <img src="assets/dummy-post-04.png" alt="Trees and open countryside photographed in motion" loading="lazy">
+              </figure>
+              <div class="post-details">
+                <header class="post-header">
+                  <img class="post-avatar" src="assets/dummy-profile-04.png" alt="Noah Williams's profile picture">
+                  <div class="post-author">
+                    <strong>Noah Williams</strong>
+                    <span>@noahwilliams · 3 hr</span>
+                  </div>
+                  <button class="more-button" type="button" aria-label="More options for Noah Williams's post">•••</button>
+                </header>
+                <h2 class="post-title">Taking the long way home</h2>
+                <p class="post-location">
+                  <svg aria-hidden="true">
+                    <use href="#pin"/>
+                  </svg>
+                  Outdoors
+                </p>
+                <p class="post-copy">A glimpse of the countryside passing by.</p>
+                <footer class="post-footer">
+                  <button class="post-action like-button" type="button" aria-label="Like post" aria-pressed="false">
+                    <svg aria-hidden="true">
+                      <use href="#heart"/>
+                    </svg>
+                    <span class="like-count">64</span>
+                  </button>
+                  <button class="post-action " type="button" aria-label="9 comments">
+                    <svg aria-hidden="true">
+                      <use href="#comment"/>
+                    </svg>
+                    <span>9</span>
+                  </button>
+                  <button class="post-action " type="button" aria-label="Share post">
+                    <svg aria-hidden="true">
+                      <use href="#share"/>
+                    </svg>
+                    <span>Share</span>
+                  </button>
+                  <button class="post-action save-action" type="button" aria-label="Save post" aria-pressed="false">
+                    <svg aria-hidden="true">
+                      <use href="#bookmark"/>
+                    </svg>
+                  </button>
+                </footer>
+              </div>
+            </article>
+          </div>
+        </section>
+        <footer class="site-footer">
+          <span>community like</span>
+          <span class="footer-dot" aria-hidden="true">·</span>
+          <span>Little moments, shared.</span>
+        </footer>
+      </main>
+    </div>
+    <script src="app.js">
+    </script>
+  </body>
+</html>

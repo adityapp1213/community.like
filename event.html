@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>community like · Event</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Instrument+Serif:ital@0;1&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Shadows+Into+Light&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <svg class="svg-library" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <symbol id="heart" viewBox="0 0 24 24">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>
+        </symbol>
+        <symbol id="comment" viewBox="0 0 24 24">
+          <path d="M21 11.5a9 9 0 0 1-9 9 10 10 0 0 1-4-.9L3 21l1.4-4.8A9 9 0 1 1 21 11.5Z"/>
+        </symbol>
+        <symbol id="share" viewBox="0 0 24 24">
+          <path d="M12 16V3m-5 5 5-5 5 5M5 13v7h14v-7"/>
+        </symbol>
+        <symbol id="bookmark" viewBox="0 0 24 24">
+          <path d="M6 3h12v18l-6-4-6 4Z"/>
+        </symbol>
+        <symbol id="pin" viewBox="0 0 24 24">
+          <path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/>
+          <circle cx="12" cy="10" r="2.5"/>
+        </symbol>
+        <symbol id="search" viewBox="0 0 24 24">
+          <circle cx="10.5" cy="10.5" r="7"/>
+          <path d="m16 16 5 5"/>
+        </symbol>
+      </defs>
+    </svg>
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Community navigation">
+        <a class="brand" href="index.html" aria-label="community like home">
+          <img src="assets/logo.png" alt="community like" class="brand-logo">
+        </a>
+        <nav class="navigation">
+          <a class="nav-link" href="profile.html">
+            <span class="nav-icon">
+              <img src="assets/profile.png" alt="">
+            </span>
+            <span class="nav-label">Profile</span>
+          </a>
+          <a class="nav-link" href="index.html">
+            <span class="nav-icon">
+              <img src="assets/feeds.png" alt="">
+            </span>
+            <span class="nav-label">Feeds</span>
+          </a>
+          <a class="nav-link active" href="event.html" aria-current="page">
+            <span class="nav-icon">
+              <img src="assets/event.png" alt="">
+            </span>
+            <span class="nav-label">Event</span>
+            <span class="count-badge">3</span>
+          </a>
+          <a class="nav-link" href="friends.html">
+            <span class="nav-icon">
+              <img src="assets/friends.png" alt="">
+            </span>
+            <span class="nav-label">Friends</span>
+          </a>
+        </nav>
+      </aside>
+      <main class="main-content">
+        <form class="search-bar" role="search">
+          <label class="sr-only" for="site-search">Search</label>
+          <svg class="search-icon" aria-hidden="true">
+            <use href="#search"/>
+          </svg>
+          <input id="site-search" type="search" placeholder="Search" autocomplete="off">
+        </form>
+
+        <section class="directory-page" aria-labelledby="events-heading">
+          <header class="page-heading">
+            <div>
+              <h1 id="events-heading">Events</h1>
+              <p>A little time together. A few new memories.</p>
+            </div>
+            <span class="section-count">3 upcoming</span>
+          </header>
+          <p class="event-note">Sample community events · All times in IST</p>
+          <div class="event-list">
+            <article class="event-card" data-search-item>
+              <div class="event-date" aria-label="SAT, October 10, 2026">
+                <span>OCT</span>
+                <strong>10</strong>
+                <span>SAT</span>
+              </div>
+              <div class="event-info">
+                <p class="event-category">A photo walk</p>
+                <h2>A slower Saturday</h2>
+                <p class="event-meta"><time datetime="2026-10-10T10:00:00+05:30">10:00 AM IST</time><span aria-hidden="true">·</span>Riverside Park, NYC</p>
+                <p class="event-description">Bring your camera or just your curiosity. A relaxed morning walk to notice the little things.</p>
+                <div class="event-bottom">
+                  <span><strong class="going-count">12</strong> going</span>
+                  <button class="quiet-button rsvp-button" type="button" aria-pressed="false" aria-label="Join A slower Saturday">Join event</button>
+                </div>
+              </div>
+            </article>
+            <article class="event-card" data-search-item>
+              <div class="event-date" aria-label="SUN, October 11, 2026">
+                <span>OCT</span>
+                <strong>11</strong>
+                <span>SUN</span>
+              </div>
+              <div class="event-info">
+                <p class="event-category">A community meetup</p>
+                <h2>Coffee & conversation</h2>
+                <p class="event-meta"><time datetime="2026-10-11T11:00:00+05:30">11:00 AM IST</time><span aria-hidden="true">·</span>Online</p>
+                <p class="event-description">Pull up a chair, bring your favorite drink, and get to know a few familiar faces.</p>
+                <div class="event-bottom">
+                  <span><strong class="going-count">8</strong> going</span>
+                  <button class="quiet-button rsvp-button" type="button" aria-pressed="false" aria-label="Join Coffee & conversation">Join event</button>
+                </div>
+              </div>
+            </article>
+            <article class="event-card" data-search-item>
+              <div class="event-date" aria-label="SAT, October 17, 2026">
+                <span>OCT</span>
+                <strong>17</strong>
+                <span>SAT</span>
+              </div>
+              <div class="event-info">
+                <p class="event-category">A creative afternoon</p>
+                <h2>Make something together</h2>
+                <p class="event-meta"><time datetime="2026-10-17T14:00:00+05:30">2:00 PM IST</time><span aria-hidden="true">·</span>Online</p>
+                <p class="event-description">Share a sketch, a photograph, or an idea. An easygoing afternoon for a little creative inspiration.</p>
+                <div class="event-bottom">
+                  <span><strong class="going-count">16</strong> going</span>
+                  <button class="quiet-button rsvp-button" type="button" aria-pressed="false" aria-label="Join Make something together">Join event</button>
+                </div>
+              </div>
+            </article>
+          </div>
+          <p class="directory-empty" hidden>No events match your search.</p>
+        </section>
+        <footer class="site-footer">
+          <span>community like</span>
+          <span class="footer-dot" aria-hidden="true">·</span>
+          <span>Little moments, shared.</span>
+        </footer>
+      </main>
+    </div>
+    <script src="app.js">
+    </script>
+  </body>
+</html>

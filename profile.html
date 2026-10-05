@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>community like · Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Instrument+Serif:ital@0;1&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Shadows+Into+Light&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <svg class="svg-library" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <symbol id="heart" viewBox="0 0 24 24">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>
+        </symbol>
+        <symbol id="comment" viewBox="0 0 24 24">
+          <path d="M21 11.5a9 9 0 0 1-9 9 10 10 0 0 1-4-.9L3 21l1.4-4.8A9 9 0 1 1 21 11.5Z"/>
+        </symbol>
+        <symbol id="share" viewBox="0 0 24 24">
+          <path d="M12 16V3m-5 5 5-5 5 5M5 13v7h14v-7"/>
+        </symbol>
+        <symbol id="bookmark" viewBox="0 0 24 24">
+          <path d="M6 3h12v18l-6-4-6 4Z"/>
+        </symbol>
+        <symbol id="pin" viewBox="0 0 24 24">
+          <path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/>
+          <circle cx="12" cy="10" r="2.5"/>
+        </symbol>
+        <symbol id="search" viewBox="0 0 24 24">
+          <circle cx="10.5" cy="10.5" r="7"/>
+          <path d="m16 16 5 5"/>
+        </symbol>
+      </defs>
+    </svg>
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Community navigation">
+        <a class="brand" href="index.html" aria-label="community like home">
+          <img src="assets/logo.png" alt="community like" class="brand-logo">
+        </a>
+        <nav class="navigation">
+          <a class="nav-link active" href="profile.html" aria-current="page">
+            <span class="nav-icon">
+              <img src="assets/profile.png" alt="">
+            </span>
+            <span class="nav-label">Profile</span>
+          </a>
+          <a class="nav-link" href="index.html">
+            <span class="nav-icon">
+              <img src="assets/feeds.png" alt="">
+            </span>
+            <span class="nav-label">Feeds</span>
+          </a>
+          <a class="nav-link" href="event.html">
+            <span class="nav-icon">
+              <img src="assets/event.png" alt="">
+            </span>
+            <span class="nav-label">Event</span>
+            <span class="count-badge">3</span>
+          </a>
+          <a class="nav-link" href="friends.html">
+            <span class="nav-icon">
+              <img src="assets/friends.png" alt="">
+            </span>
+            <span class="nav-label">Friends</span>
+          </a>
+        </nav>
+      </aside>
+      <main class="main-content">
+        <form class="search-bar" role="search">
+          <label class="sr-only" for="site-search">Search</label>
+          <svg class="search-icon" aria-hidden="true">
+            <use href="#search"/>
+          </svg>
+          <input id="site-search" type="search" placeholder="Search" autocomplete="off">
+        </form>
+
+        <section class="profile-card" aria-labelledby="profile-name">
+          <div class="profile-banner">
+            <img src="assets/profile-banner.png" alt="A grassy hill with wildflowers beneath a blue, cloud-filled sky">
+          </div>
+
+          <div class="profile-content">
+            <div class="profile-summary">
+              <img class="profile-picture" src="assets/dummy-profile-01.png" alt="Fredy Mercury's profile picture">
+              <dl class="profile-stats">
+                <div>
+                  <dt>Followers</dt>
+                  <dd>1.25k</dd>
+                </div>
+                <div>
+                  <dt>Following</dt>
+                  <dd>455</dd>
+                </div>
+              </dl>
+            </div>
+
+            <header class="profile-intro">
+              <h1 id="profile-name">
+                Fredy Mercury
+                <svg class="profile-verified" viewBox="0 0 24 24" role="img" aria-label="Verified profile">
+                  <path d="m12 2 3 2 3.6.4.9 3.5L22 11l-1.5 3.2-.9 3.5-3.6.4-3 2-3-2-3.6-.4-.9-3.5L2 11l2.5-3.1.9-3.5L9 4Z"/>
+                  <path class="profile-check" d="m8 11 2.5 2.5L16 8"/>
+                </svg>
+              </h1>
+              <p>A UI/UX designer turning everyday inspiration into thoughtful digital experiences. Sharing little moments, creative experiments, and a different way of seeing things.</p>
+            </header>
+
+            <section class="profile-posts" id="profile-posts" aria-label="Profile posts">
+              <h2 class="profile-posts-heading">Posts</h2>
+              <article class="profile-featured" aria-labelledby="featured-title">
+                <figure class="profile-featured-media">
+                  <img src="assets/dummy-post-01.png" alt="Sunlight shining through a leafy tree canopy against a blue sky" loading="lazy">
+                  <figcaption>
+                    <svg aria-hidden="true"><use href="#pin"/></svg>
+                    Featured post
+                  </figcaption>
+                </figure>
+                <div class="profile-featured-details">
+                  <h2 id="featured-title">A quieter kind of morning</h2>
+                  <p>There is something about looking up that makes a busy day feel a little quieter.</p>
+                  <footer class="post-footer">
+                    <button class="post-action like-button" type="button" aria-label="Like post" aria-pressed="false">
+                      <svg aria-hidden="true"><use href="#heart"/></svg>
+                      <span class="like-count">48</span>
+                    </button>
+                    <span class="post-action" aria-label="12 comments">
+                      <svg aria-hidden="true"><use href="#comment"/></svg>
+                      <span>12</span>
+                    </span>
+                    <button class="post-action save-action" type="button" aria-label="Save post" aria-pressed="false">
+                      <svg aria-hidden="true"><use href="#bookmark"/></svg>
+                    </button>
+                  </footer>
+                </div>
+              </article>
+            </section>
+          </div>
+        </section>
+        <footer class="site-footer">
+          <span>community like</span>
+          <span class="footer-dot" aria-hidden="true">·</span>
+          <span>Little moments, shared.</span>
+        </footer>
+      </main>
+    </div>
+    <script src="app.js">
+    </script>
+  </body>
+</html>
