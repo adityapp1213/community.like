@@ -1,52 +1,41 @@
-document.querySelector('.search-bar').addEventListener('submit', (event) => event.preventDefault());
-document.querySelectorAll('.like-button').forEach((button) => {
-  button.addEventListener('click', () => {
-    const count = button.querySelector('.like-count');
-    const liked = button.classList.toggle('liked');
-    button.setAttribute('aria-pressed', String(liked));
-    button.setAttribute('aria-label', liked ? 'Unlike post' : 'Like post');
-    count.textContent = Number(count.textContent) + (liked ? 1 : -1);
-  });
-});
-document.querySelectorAll('.save-action').forEach((button) => {
-  button.addEventListener('click', () => {
-    const saved = button.classList.toggle('saved');
-    button.setAttribute('aria-pressed', String(saved));
-    button.setAttribute('aria-label', saved ? 'Unsave post' : 'Save post');
-  });
-});
-
-// Friend profiles expand in place to keep the directory easy to browse.
-document.querySelectorAll('.friend-profile-button').forEach((button) => {
-  button.addEventListener('click', () => {
-    const bio = document.getElementById(button.getAttribute('aria-controls'));
-    const expanded = button.getAttribute('aria-expanded') !== 'true';
-    button.setAttribute('aria-expanded', String(expanded));
-    button.textContent = expanded ? 'Close profile' : 'View profile';
-    bio.hidden = !expanded;
-  });
-});
-
-// RSVP changes are local to this demo page.
-document.querySelectorAll('.rsvp-button').forEach((button) => {
-  button.addEventListener('click', () => {
-    const joined = button.getAttribute('aria-pressed') !== 'true';
-    const count = button.closest('.event-card').querySelector('.going-count');
-    count.textContent = Number(count.textContent) + (joined ? 1 : -1);
-    button.setAttribute('aria-pressed', String(joined));
-    button.textContent = joined ? 'Going ✓' : 'Join event';
-  });
-});
-
-const directoryItems = [...document.querySelectorAll('[data-search-item]')];
-if (directoryItems.length) {
-  document.querySelector('#site-search').addEventListener('input', (event) => {
-    const query = event.target.value.trim().toLowerCase();
-    let visible = 0;
-    directoryItems.forEach((item) => {
-      item.hidden = !item.textContent.toLowerCase().includes(query);
-      if (!item.hidden) visible += 1;
-    });
-    document.querySelector('.directory-empty').hidden = visible > 0;
-  });
-}
+(() => {
+  const { auth, repository } = window.Community;
+  const main = document.querySelector('.main-content');
+  const search = document.querySelector('#site-search');
+  const page = location.pathname.split('/').pop() || 'index.html';
+  const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  const user = (db, id) => db.users.find(item => item.id === id);
+  const button = (action, id, label, pressed) => `<button type="button" class="quiet-button" data-action="${action}" data-id="${esc(id)}"${pressed === undefined ? '' : ` aria-pressed="${pressed}"`}>${label}</button>`;
+  const status = document.createElement('p'); status.className = 'app-status'; status.setAttribute('role','status'); document.body.append(status);
+  const notify = message => { status.textContent = message; setTimeout(() => { status.textContent = ''; }, 4000); };
+  const tools = document.createElement('div'); tools.className = 'search-tools'; tools.innerHTML = '<span>Search in</span>' + ['feed','events','friends'].map(x => `<button type="button" class="quiet-button" data-scope="${x}">@${x}</button>`).join(''); document.querySelector('.search-bar').append(tools);
+  search.placeholder = 'Search @feed, @events, or @friends';
+  // The HTML files include a no-script fallback. Once the app boots, replace it
+  // with the single shared renderer so cards never appear twice.
+  const searchBar = main.querySelector('.search-bar');
+  const siteFooter = main.querySelector('.site-footer');
+  const content = document.createElement('section'); content.className = 'directory-page app-rendered';
+  // Rebuild the main column from the three live regions. This removes every
+  // static fallback card, including markup nested by older page versions.
+  main.replaceChildren(searchBar, content, siteFooter);
+  const link = id => `profile.html?user=${encodeURIComponent(id)}`;
+  function render() {
+    const db = repository.get(), me = auth.current(), activity = me && (db.activity[me.id] || { likes:[], saved:[], events:[], friends:[] });
+    const post = p => { const a = user(db,p.author); const comments = p.comments || 0; const likes = p.likes + (activity?.likes.includes(p.id)?1:0); const owned = p.author === me?.id; return `<article class="post-card"><figure class="post-media"><img src="${p.image}" alt="${esc(p.title)}" loading="lazy"></figure><div class="post-details"><header class="post-header"><img class="post-avatar" src="${a.image}" alt=""><a class="post-author" href="${link(a.id)}"><strong>${esc(a.name)}</strong><span>@${esc(a.handle)}</span></a>${owned ? `<button class="post-menu" type="button" data-action="delete" data-id="${p.id}" aria-label="Delete project">Delete</button>` : ''}</header><h2 class="post-title">${esc(p.title)}</h2><p class="post-location"><svg aria-hidden="true"><use href="#pin"></use></svg><span>${esc(p.location)}</span></p><p class="post-copy">${esc(p.text)}</p><footer class="post-footer"><button type="button" class="post-action like-button ${activity?.likes.includes(p.id)?'liked':''}" data-action="like" data-id="${p.id}" aria-label="Like project" aria-pressed="${activity?.likes.includes(p.id)}"><svg aria-hidden="true"><use href="#heart"></use></svg><span>${likes}</span></button><span class="post-action post-stat" aria-label="${comments} comments"><svg aria-hidden="true"><use href="#comment"></use></svg><span>${comments}</span></span><button type="button" class="post-action" data-action="share" data-id="${p.id}" aria-label="Share project"><svg aria-hidden="true"><use href="#share"></use></svg><span>${p.shares || 0}</span></button><button type="button" class="post-action save-action ${activity?.saved.includes(p.id)?'saved':''}" data-action="save" data-id="${p.id}" aria-label="Save project" aria-pressed="${activity?.saved.includes(p.id)}"><svg aria-hidden="true"><use href="#bookmark"></use></svg><span>${p.saves || 0}</span></button></footer></div></article>`; };
+    const friend = f => `<article class="friend-card"><img class="friend-picture" src="${f.image}" alt=""><div class="friend-info"><h2><a href="${link(f.id)}">${esc(f.name)}</a></h2><p>@${esc(f.handle)}</p><span class="friend-status">${activity?.friends.includes(f.id)?'Friend':'Community member'}</span></div>${f.id === me?.id ? '<span>You</span>' : button('friend',f.id,activity?.friends.includes(f.id)?'Remove friend':'Add friend',activity?.friends.includes(f.id))}<p class="friend-bio">${esc(f.bio)}</p></article>`;
+    const event = e => { const d = new Date(e.date), h = user(db,e.host), joined = activity?.events.includes(e.id); return `<article class="event-card"><div class="event-date"><span>${d.toLocaleString('en',{month:'short'}).toUpperCase()}</span><strong>${d.getDate()}</strong><span>${d.toLocaleString('en',{weekday:'short'}).toUpperCase()}</span></div><div class="event-info"><p class="event-category">${esc(e.category)}</p><h2>${esc(e.title)}</h2><p class="event-meta">${d.toLocaleString('en-IN',{timeZone:'Asia/Kolkata',hour:'numeric',minute:'2-digit'})} IST · ${esc(e.location)}</p><p class="event-description">${esc(e.text)}</p><p class="event-meta">Hosted by <a href="${link(h.id)}">${esc(h.name)}</a></p><div class="event-bottom"><span><strong class="going-count">${e.going}</strong> going</span>${button('rsvp',e.id,joined?'Going ✓':'Join event',joined)}</div></div></article>`; };
+    const q = search.value.trim(), match = q.match(/^@(feed|events|friends)\b/i), scope = match?.[1]?.toLowerCase(), term = q.replace(/^@(feed|events|friends)\b/i,'').trim().toLowerCase(), includes = item => Object.values(item).join(' ').toLowerCase().includes(term);
+    document.querySelectorAll('[data-scope]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.scope === scope)));
+    if (q) { const posts = (!scope || scope==='feed') ? db.posts.filter(p => includes({...p, author:user(db,p.author).name})) : []; const events = (!scope || scope==='events') ? db.events.filter(e => includes({...e, host:user(db,e.host).name})) : []; const friends = (!scope || scope==='friends') ? db.users.filter(includes) : []; content.innerHTML = `<header class="page-heading"><div><h1>Search results</h1><p>${posts.length+events.length+friends.length} matches${scope?` in @${scope}`:''}</p></div>${button('clear','','Clear')}</header>${posts.length?`<h2 class="result-heading">Projects</h2><div class="post-list">${posts.map(post).join('')}</div>`:''}${events.length?`<h2 class="result-heading">Events</h2><div class="event-list">${events.map(event).join('')}</div>`:''}${friends.length?`<h2 class="result-heading">Friends</h2><div class="friend-list">${friends.map(friend).join('')}</div>`:''}`; return; }
+    if (page === 'friends.html') content.innerHTML = `<header class="page-heading"><div><h1>Friends</h1><p>The familiar faces in your community.</p></div><span class="section-count">${db.users.length-1} friends</span></header><div class="friend-list">${db.users.filter(f=>f.id!==me?.id).map(friend).join('')}</div>`;
+    else if (page === 'event.html') content.innerHTML = `<header class="page-heading"><div><h1>Events</h1><p>Build together. Ask questions. Share what works.</p></div><span class="section-count">${db.events.length} upcoming</span></header><p class="event-note">Student projects · All times in IST</p><div class="event-list">${db.events.map(event).join('')}</div>`;
+    else if (page === 'profile.html') { const profile = user(db, new URLSearchParams(location.search).get('user')) || me || user(db,'fredy'); const posts = db.posts.filter(p => p.author === profile.id); content.innerHTML = `<div class="profile-banner"><img src="assets/profile-banner.png" alt="Wildflowers beneath a blue sky"></div><div class="profile-content"><div class="profile-summary"><img class="profile-picture" src="${profile.image}" alt="${esc(profile.name)}"></div><header class="profile-intro"><h1>${esc(profile.name)}</h1><p>@${esc(profile.handle)}</p><p>${esc(profile.bio)}</p></header><h2 class="result-heading">Posts</h2><div class="post-list">${posts.map(post).join('') || '<p class="directory-empty">No posts yet.</p>'}</div></div>`; }
+    else content.innerHTML = `<form class="project-composer" data-form="project"><div class="composer-top"><img src="${me.image}" alt=""><textarea name="text" maxlength="500" required placeholder="What’s happening with your project?"></textarea></div><div class="composer-preview" hidden><img alt="Selected project image preview"><span>Image ready</span><button type="button" class="preview-remove" data-composer="remove-image" aria-label="Remove selected image">×</button></div><input class="composer-location" name="location" maxlength="80" placeholder="Add your university" hidden><input type="file" name="image" accept="image/*" hidden><div class="composer-tools"><button type="button" class="composer-tool" data-composer="image"><img src="assets/upload.svg" alt=""><span>Media</span></button><button type="button" class="composer-tool" data-composer="location"><img src="assets/flag.svg" alt=""><span>University</span></button><button class="composer-submit" type="submit">Post</button></div></form><div class="post-list">${db.posts.map(post).join('')}</div>`;
+  }
+  function update(change) { repository.update(change); render(); notify('Saved in this browser.'); }
+  document.addEventListener('click', e => { const scope=e.target.closest('[data-scope]'); if(scope){search.value=`@${scope.dataset.scope} `;render();search.focus();return;} const t=e.target.closest('[data-action]'); if(!t)return; const {action,id}=t.dataset; if(action==='clear'){search.value='';return render();} if(action==='share'){navigator.clipboard?.writeText(location.href+'#'+id);return notify('Post link copied.');} if(action==='delete'){ if(confirm('Delete this project?')) { repository.update(db => { db.posts = db.posts.filter(post => post.id !== id); }); render(); notify('Project deleted.'); } return; } const field={like:'likes',save:'saved',rsvp:'events',friend:'friends'}[action]; if(field)update((db,a)=>{a[field]=a[field].includes(id)?a[field].filter(x=>x!==id):[...a[field],id];}); });
+  document.addEventListener('click', e => { const tool = e.target.closest('[data-composer]'); if (!tool) return; const form = tool.closest('form'); const action = tool.dataset.composer; if (action === 'image') form.querySelector('input[type="file"]').click(); if (action === 'remove-image') { form.dataset.image = ''; form.querySelector('input[type="file"]').value = ''; form.querySelector('.composer-preview').hidden = true; form.querySelector('[data-composer="image"]').classList.remove('selected'); } if (action === 'location') { const field = form.querySelector('.composer-location'); field.hidden = !field.hidden; if (!field.hidden) field.focus(); } });
+  document.addEventListener('change', e => { if (e.target.matches('.project-composer input[type="file"]') && e.target.files[0]) { const reader = new FileReader(); reader.onload = () => { e.target.form.dataset.image = reader.result; e.target.form.querySelector('[data-composer="image"]').classList.add('selected'); const preview = e.target.form.querySelector('.composer-preview'); preview.hidden = false; preview.querySelector('img').src = reader.result; }; reader.readAsDataURL(e.target.files[0]); } });
+  document.addEventListener('submit', e => { const form = e.target.closest('[data-form="project"]'); if (!form) return; e.preventDefault(); const values = new FormData(form); const text = String(values.get('text') || '').trim(); if (!text) return; const location = String(values.get('location') || '').trim() || 'University community'; repository.update((db, activity, id) => db.posts.unshift({ id: `project-${Date.now()}`, author: id, title: text.split(/[.!?]/)[0].slice(0, 72) || 'New student project', text, location, image: form.dataset.image || 'assets/project-workbench.png', likes: 0, comments: 0, shares: 0, saves: 0 })); render(); notify('Project posted.'); });
+  search.addEventListener('input',render); window.addEventListener('storage',render); render();
+})();
