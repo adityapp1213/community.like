@@ -1,4 +1,4 @@
-/* Small local data layer. Swap these methods for API calls when auth is added. */
+/* Local data layer. Replace repository methods with API calls for a shared backend. */
 (() => {
   const dbKey = 'community-like.db.v1';
   const sessionKey = 'community-like.session.v1';
@@ -18,7 +18,6 @@
     ],
     events: [
       { id: 'robotics-lab', host: 'maya', title: 'Robotics project help', category: 'Build session', date: '2026-10-10T10:00:00+05:30', location: 'IIT Delhi · Innovation Lab', text: 'Bring your robot, your wiring, or your questions. We will test ideas together.', going: 12 },
-      { id: 'circuit-clinic', host: 'sam', title: 'Circuit debugging clinic', category: 'Peer help', date: '2026-10-11T11:00:00+05:30', location: 'Online', text: 'Share a circuit that is not working. We will read the diagram and debug it together.', going: 8 },
       { id: 'project-showcase', host: 'jordan', title: 'Student project showcase', category: 'Show and tell', date: '2026-10-17T14:00:00+05:30', location: 'Online', text: 'Show what you built, ask for feedback, and find people who want to help.', going: 16 }
     ], activity: {}
   };
@@ -30,13 +29,13 @@
   db.events ||= structuredClone(seed.events);
   db.activity ||= {};
   if (db.posts.some(post => post.title === 'A quieter kind of morning' || String(post.image).includes('dummy-post'))) db.posts = structuredClone(seed.posts);
-  if (db.events.some(event => event.title === 'A slower Saturday')) db.events = structuredClone(seed.events);
+  if (db.events.some(event => event.title === 'A slower Saturday' || event.id === 'circuit-clinic')) db.events = structuredClone(seed.events);
   db.users.forEach(user => { db.activity[user.id] ||= { likes: [], saved: [], events: [], friends: db.users.filter(item => item.id !== user.id).map(item => item.id) }; });
   try { localStorage.setItem(dbKey, JSON.stringify(db)); } catch {}
   let session = null;
   try { session = localStorage.getItem(sessionKey); } catch {}
   const save = () => { try { localStorage.setItem(dbKey, JSON.stringify(db)); return true; } catch { return false; } };
   const auth = { current: () => db.users.find(user => user.id === session) || db.users[0], signIn(id) { session = id; try { localStorage.setItem(sessionKey, id); } catch {} }, signOut() { session = db.users[0].id; try { localStorage.setItem(sessionKey, session); } catch {} } };
-  const repository = { get: () => structuredClone(db), persistent: () => { try { return !!window.localStorage; } catch { return false; } }, update(change) { const user = auth.current(); if (!user) throw new Error('Sign in first'); db.activity[user.id] ||= { likes: [], saved: [], events: [], friends: db.users.filter(item => item.id !== user.id).map(item => item.id) }; change(db, db.activity[user.id], user.id); return save(); } };
+  const repository = { get: () => structuredClone(db), persistent: () => { try { return !!window.localStorage; } catch { return false; } }, syncUser(profile) { const email = String(profile.email || '').trim().toLowerCase(); if (!email) return; const duplicateIds = db.users.filter(item => (item.email && item.email.toLowerCase() === email) || item.id === profile.id).map(item => item.id); const existing = db.users.find(item => duplicateIds.includes(item.id)); const id = existing?.id || profile.id; const record = { id, email, name: profile.name || email.split('@')[0], handle: `@${email}`, image: profile.image || 'assets/profile.png', bio: existing?.bio || 'A student building and learning with the community.' }; db.users = db.users.filter(item => item.id === id || !duplicateIds.includes(item.id)); const index = db.users.findIndex(item => item.id === id); if (index >= 0) db.users[index] = { ...db.users[index], ...record }; else db.users.push(record); db.activity[id] ||= { likes: [], saved: [], events: [], friends: db.users.filter(item => item.id !== id).map(item => item.id) }; save(); session = id; try { localStorage.setItem(sessionKey, id); } catch {} }, addEvent(event) { const current = auth.current(); if (!current) throw new Error('Sign in first'); db.events.unshift({ ...event, id: `event-${Date.now()}`, host: current.id, going: 0 }); save(); }, update(change) { const user = auth.current(); if (!user) throw new Error('Sign in first'); db.activity[user.id] ||= { likes: [], saved: [], events: [], friends: db.users.filter(item => item.id !== user.id).map(item => item.id) }; change(db, db.activity[user.id], user.id); return save(); } };
   window.Community = { auth, repository };
 })();

@@ -1,4 +1,4 @@
-/* Plain HTML Clerk bridge. Set this to the Clerk publishable key from your dashboard. */
+/* Clerk adapter: protects pages, mounts account UI, and syncs the current user. */
 const CLERK_PUBLISHABLE_KEY = window.CLERK_PUBLISHABLE_KEY || 'pk_test_Y2hhcm1pbmcta2FuZ2Fyb28tMjE3OS5jbGVyay5hY2NvdW50cy5kZXYk';
 const authLanding = location.pathname.endsWith('landing.html');
 const clerkDomain = atob(CLERK_PUBLISHABLE_KEY.split('_')[2]).slice(0, -1);
@@ -18,6 +18,7 @@ const initializeClerk = async () => {
   if (window.__internal_ClerkUICtor) await clerk.load({ ui: { ClerkUI: window.__internal_ClerkUICtor } });
   else await clerk.load();
   window.CommunityAuth = clerk;
+  window.dispatchEvent(new CustomEvent('community-auth-ready', { detail: { id: clerk.user?.id, email: clerk.user?.primaryEmailAddress?.emailAddress, name: clerk.user?.fullName || clerk.user?.firstName, image: clerk.user?.imageUrl } }));
   if (authLanding) {
     document.querySelector('[data-auth-loading]')?.remove();
     if (clerk.user) document.querySelector('[data-auth-user]')?.replaceChildren(clerk.user.firstName || clerk.user.username || 'Account');
