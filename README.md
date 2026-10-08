@@ -1,6 +1,8 @@
 # community like
 
 Community Like is a plain HTML, CSS, and JavaScript student project community app.
+![Uploading image.png…]()
+
 
 ## Run
 
